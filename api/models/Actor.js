@@ -36,6 +36,11 @@ module.exports = {
       type: 'string',
       required: true,
       example: 'male'
+    }, 
+
+    movies: {
+      collection: 'movie',
+      via: 'actors',
     }
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

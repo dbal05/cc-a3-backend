@@ -44,6 +44,11 @@ module.exports = {
       required: true,
       maxLength: 200,
       example: 'USA'
+    },
+
+    actors: {
+      collection: 'actor',
+      via: 'movies',
     }
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
