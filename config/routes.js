@@ -34,6 +34,8 @@ module.exports.routes = {
   'GET /movie/getMoviesByYear889': 'MovieController.getMoviesByYear889',
   'GET /movie/getMoviesByRuntime889': 'MovieController.getMoviesByRuntime889',
   'GET /movie/getMoviesByCountry889': 'MovieController.getMoviesByCountry889',
+  'GET /movie/getMoviesByLanguage889': 'MovieController.getMoviesByLanguage889',
+
   'POST /movie/addActorForMovieById889': 'MovieController.addActorForMovieById889',
   'DELETE /movie/deleteMovieById889': 'MovieController.deleteMovieById889',
 

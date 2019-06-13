@@ -26,7 +26,7 @@ module.exports = {
     getMovieByTitle889: async function(req, res) {
         var title = req.query.title;
         var movie = await Movie.find({
-            title: title
+            title: {contains: title}
         }).populate('actors');
 
         return res.json({
@@ -35,10 +35,22 @@ module.exports = {
     },
 
     getMoviesByYear889: async function(req, res) {
-        var year = req.query.year;
-        var movies = await Movie.find({
-            year: year
-        }).populate('actors');
+        var minYear = req.query.minYear;
+        var maxYear = req.query.maxYear;
+        var movies;
+        if (minYear && maxYear) {
+            movies = await Movie.find({
+                year: {'<=': maxYear, '>=': minYear} 
+            }).populate('actors');
+        } else if (minYear) {
+            movies = await Movie.find({
+                year: {'>=': minYear} 
+            }).populate('actors');
+        } else if (maxYear) { 
+            movies = await Movie.find({
+                year: {'<=': maxYear} 
+            }).populate('actors');
+        }
 
         return res.json({
             movies: movies
@@ -59,7 +71,18 @@ module.exports = {
     getMoviesByCountry889: async function(req, res) {
         var country = req.query.country;
         var movies = await Movie.find({
-            release_country: country
+            release_country: {contains: country}
+        }).populate('actors');
+
+        return res.json({
+            movies: movies
+        });
+    },
+    
+    getMoviesByLanguage889: async function(req, res) {
+        var language = req.query.language;
+        var movies = await Movie.find({
+            language: {contains: language}
         }).populate('actors');
 
         return res.json({

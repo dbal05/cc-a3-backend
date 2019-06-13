@@ -26,10 +26,21 @@ module.exports = {
     getActorByName889: async function(req, res) {
         var firstname = req.query.firstname;
         var lastname = req.query.lastname;
-        var actor = await Actor.find({
-            firstname: firstname,
-            lastname: lastname 
-        }).populate('movies');
+
+        if (firstname && lastname) {
+            var actor = await Actor.find({
+                firstname: { contains: firstname },
+                lastname: { contains: lastname } 
+            }).populate('movies');
+        } else if (firstname) {
+            var actor = await Actor.find({
+                firstname: { contains: firstname }
+            }).populate('movies');
+        } else if (lastname) {
+            var actor = await Actor.find({
+                lastname: { contains: lastname } 
+            }).populate('movies');
+        }
 
         return res.json({
             actor: actor
@@ -39,16 +50,17 @@ module.exports = {
     getActorByAge889: async function(req, res) {
         var minAge = req.query.minAge;
         var maxAge = req.query.maxAge;
+        var actor;
         if (minAge && maxAge) {
-            var actor = await Actor.find({
+            actor = await Actor.find({
                 age: {'<=': maxAge, '>=': minAge} 
             }).populate('movies'); 
         } else if (minAge && !maxAge) {
-            var actor = await Actor.find({
+            actor = await Actor.find({
                 age: {'>=': minAge} 
             }).populate('movies'); 
         } else if (!minAge && maxAge) {
-            var actor = await Actor.find({
+            actor = await Actor.find({
                 age: {'<=': maxAge} 
             }).populate('movies');
         }
